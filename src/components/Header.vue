@@ -1,5 +1,5 @@
 <script setup>
-import { ref, watchEffect, defineProps, onMounted } from 'vue';
+import { ref, defineProps } from 'vue';
 import { useStore } from 'vuex';
 
 defineProps({
@@ -21,41 +21,21 @@ defineProps({
 });
 
 const store = useStore();
-const isDarkMode = ref(false);
 const showSettings = ref(false);
-
-const toggleDarkMode = () => {
-  isDarkMode.value = !isDarkMode.value;
-  document.body.classList.toggle('dark-mode', isDarkMode.value);
-  localStorage.setItem('isDarkMode', isDarkMode.value);
-};
 
 const toggleSettings = () => {
   showSettings.value = !showSettings.value;
 };
 
-onMounted(() => {
-  const savedDarkMode = localStorage.getItem('isDarkMode');
-  if (savedDarkMode !== null) {
-    isDarkMode.value = savedDarkMode === 'true';
-    document.body.classList.toggle('dark-mode', isDarkMode.value);
-  }
-});
-
 const switchLanguage = () => {
   store.commit('switchLanguage');
 };
-
-watchEffect(() => {
-  document.body.style.backgroundColor = isDarkMode.value ? '#333' : '#fff';
-  document.body.style.color = isDarkMode.value ? '#fff' : '#000';
-});
 </script>
 
 <template>
-  <header :class="['header', { 'dark-mode': isDarkMode }]">
+  <header class="header">
     <div class="video-text">
-      <b>RUNNING</b>
+      <b>FUSS AZ EGÉSZSÉGÉRT</b>
     </div>
     <div class="theme-switcher">
       <i v-if="isSocial" class="bi bi-person-fill" @click="navigateToHome()"></i>
@@ -68,7 +48,6 @@ watchEffect(() => {
               {{ store.state.currentLanguage === 'en' ? 'English' : 'Magyar' }}
             </button>
           </div>
-          <i @click="toggleDarkMode" :class="isDarkMode ? 'bi bi-moon-fill' : 'bi bi-brightness-high-fill' "></i>
           <i v-if="showLogOut" @click="navigateToLogin()" class="bi bi-box-arrow-right"></i>
         </div>
       </transition>
@@ -81,25 +60,16 @@ watchEffect(() => {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 20px;
-  background-color: transparent;
+  padding: 0 12px;
+  background-color: rgb(224, 104, 0);
   color: black;
   height: 100%;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 2px 5px rgba(0, 0, 0);
 }
 
-.logo {
-  width: 4rem;
-  height: auto;
-}
-
-i:hover{
+i:hover {
   transform: scale(1.2);
   transition: transform 0.3s ease-in-out;
-}
-
-.dark-mode .logo {
-  filter: invert(1);
 }
 
 i {
@@ -131,97 +101,15 @@ i {
   transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
 }
 
-.switch {
-  position: relative;
-  display: inline-block;
-  width: 60px;
-  height: 34px;
-  margin-right: 10px;
-}
-
-.switch input {
-  opacity: 0;
-  width: 0;
-  height: 0;
-}
-
-.slider {
-  position: absolute;
-  cursor: pointer;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: transparent;
-  transition: .4s;
-}
-
-.slider:before {
-  position: absolute;
-  content: "";
-  height: 26px;
-  width: 26px;
-  left: 4px;
-  bottom: 4px;
-  background-color: white;
-  transition: .4s;
-}
-
-.bi-box-arrow-right {
-  font-size: 1.5em;
-  font-weight: 900;
-  cursor: pointer;
-}
-
-input:checked + .slider {
-  background-color: black;
-}
-
-input:checked + .slider:before {
-  transform: translateX(26px);
-}
-
-.slider.round {
-  border-radius: 34px;
-}
-
-.slider.round:before {
-  border-radius: 50%;
-}
-
-.dark-mode {
-  background-color: transparent;
-  color: #fff;
-}
-
-.dark-mode button {
-  color: white;
-}
-
-:root {
-  --header-bg-color: #fff;
-  --header-text-color: #000;
-}
-
 .video-text {
   position: relative;
   display: inline-block;
   font-size: 4rem;
   font-weight: 900;
-  color: transparent;
-  -webkit-background-clip: text;
-  background-clip: text;
-  background-image: url('/public/run.gif');
-  background-size: cover;
-  background-position: center;
+  color: black;
   text-transform: uppercase;
   cursor: pointer;
   user-select: none;
-  -webkit-text-stroke: 1px black;
-}
-
-.dark-mode .video-text {
-  -webkit-text-stroke: 1px white;
 }
 
 .slide-enter-active, .slide-leave-active {
@@ -237,7 +125,7 @@ input:checked + .slider:before {
   transform: translateX(-10%);
   opacity: 1;
 }
-.slide-leave{
+.slide-leave {
   transform: translateX(-10%);
   opacity: 1;
 }
