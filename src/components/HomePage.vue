@@ -177,6 +177,7 @@ onMounted(() => {
               <div class="normal-day" v-for="day in days" :key="day.date" @click="selectedDay = day" :class="{ 'selected-day': selectedDay && selectedDay.date === day.date }">
                 <h5>{{ day.name }}</h5>
                 <h6>{{ day.date }}</h6>
+                <p>{{ day.distance || '-' }} km</p>
               </div>
             </div>
             <div class="left-side">
@@ -533,14 +534,14 @@ button{
   min-width: 14rem;
   background: white;
   color: black;
-  padding: 1rem;
-  gap: 1rem;
+  padding: 0.4rem;
+  gap: 0.2rem;
   border-radius: 1rem;
 }
 
 .normal-day {
   text-align: center;
-  padding: 0.5rem;
+  padding: 0.2rem;
   border: 2px solid transparent;
   cursor: pointer;
   border-radius: 1rem;
@@ -550,9 +551,6 @@ button{
   min-width: 10rem;
 }
 
-.normal-day:hover {
-  border: 2px solid black;
-}
 
 .selected-day {
   background-color: #000000;
