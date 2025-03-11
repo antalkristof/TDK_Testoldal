@@ -91,19 +91,12 @@ header {
   margin: 10px 0;
   padding: 20px;
   width: 700px;
-  transition: transform 0.3s;
-  user-select: none;
-  cursor: pointer;
 }
 
 .dark-mode .card {
   background: #202528;
   color: white;
   box-shadow: #dd9c44 0px 0px 10px;
-}
-
-.card:hover {
-  transform: scale(1.1);
 }
 
 .card-header {

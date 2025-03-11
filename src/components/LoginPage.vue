@@ -4,6 +4,7 @@ import Header from '../components/Header.vue';
 import { useRouter } from 'vue-router';
 import { useStore } from 'vuex';
 
+
 const router = useRouter();
 const store = useStore();
 
@@ -14,13 +15,14 @@ const toggleForm = () => {
 };
 
 const navigateToHomePage = () => {
-  router.push('/home');
+  router.push('/socialmedia');
 };
 
 const handleLogin = () => {
   const username = document.getElementById('login-username').value;
   const password = document.getElementById('login-password').value;
   const storedUsers = JSON.parse(localStorage.getItem('users')) || [];
+
   const user = storedUsers.find(user => user.username === username && user.password === password);
 
   if (user) {
@@ -30,6 +32,38 @@ const handleLogin = () => {
     alert('Hibás felhasználónév vagy jelszó');
   }
 };
+
+const handleRegister = () => {
+  const username = document.getElementById('register-username').value;
+  const email = document.getElementById('register-email').value;
+  const password = document.getElementById('register-password').value;
+  const confirmPassword = document.getElementById('confirm-password').value;
+
+  if (password !== confirmPassword) {
+    alert('A jelszavak nem egyeznek');
+    return;
+  }
+
+  const storedUsers = JSON.parse(localStorage.getItem('users')) || [];
+
+  if (storedUsers.some(user => user.username === username)) {
+    alert('A felhasználónév már létezik');
+    return;
+  }
+
+  const user = {
+    username,
+    email,
+    password
+  };
+  
+
+  storedUsers.push(user);
+  localStorage.setItem('users', JSON.stringify(storedUsers));
+  alert('Sikeres regisztráció');
+  toggleForm();
+};
+
 </script>
 
 <template>
@@ -49,11 +83,29 @@ const handleLogin = () => {
           </div>
           <div class="button-container">
             <button type="submit" class="login-button">Belépés</button>
+            <button @click="toggleForm" class="toggle-button">Regisztráció</button>
           </div>
         </form>
-        <div class="button-container">
-          <button @click="toggleForm" class="toggle-button">Regisztráció</button>
-        </div>
+      </div>
+      <div v-else class="login-box" >
+        <form @submit.prevent="handleRegister">
+          <div class="input-container">
+            <input type="text" id="register-username" placeholder="Felhasználónév">
+          </div>
+          <div class="input-container">
+            <input type="email" id="register-email" placeholder="Email">
+          </div>
+          <div class="input-container">
+            <input type="password" id="register-password" placeholder="Jelszó">
+          </div>
+          <div class="input-container">
+            <input type="password" id="confirm-password" placeholder="Jelszó megerősítése">
+          </div>
+          <div class="button-container">
+            <button type="submit" class="login-button">Regisztráció</button>
+            <button @click="toggleForm" class="toggle-button">Bejelentkezés</button>
+          </div>
+        </form>
       </div>
     </div>
   </body>
@@ -61,13 +113,16 @@ const handleLogin = () => {
 
 <style scoped>
 body {
-  height: 100vh;
-  margin: 0;
   background: linear-gradient(to bottom, #40E0D0, #00008B);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  height: 100vh;
+  position: absolute !important;
+  left: 0 !important;
+  padding: 0;
+  z-index: 1000;
+  margin: 0;
+  color: black;
+  overflow: hidden;
+  width: 100%;  
 }
 
 .title {
@@ -84,6 +139,10 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
+  padding: 20px;
+  position: relative;
+  height: 90vh;
 }
 
 .login-box {
@@ -105,7 +164,7 @@ body {
 .button-container {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 1rem;
 }
 
 .login-button, .toggle-button {
