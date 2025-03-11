@@ -3,6 +3,7 @@ import { ref, watch, nextTick, onMounted } from 'vue';
 import Header from '../components/Header.vue';
 import { useRouter } from 'vue-router';
 import { useStore } from 'vuex';
+import AdComponent from '../components/AdComponent.vue';
 
 const router = useRouter();
 const store = useStore();
@@ -171,6 +172,11 @@ onMounted(() => {
     <!-- <div class="wellcome-text">
       <b>{{ store.getters.translate('welcome') }} {{ userName }}!</b>
     </div> -->
+    <div>
+      <AdComponent size="medium"  style="position: absolute; right: 0; top: 20%;"/>  
+      <AdComponent size="large"  style="position: absolute; left: 10%; bottom: -10%;"/>  
+      <AdComponent size="medium"  style="position: absolute; left: 0; top: 20%;"/>  
+    </div>
     <div class="main-content">
       <div class="data-container">
         <div class="all-card">
@@ -400,8 +406,8 @@ onMounted(() => {
   padding: 0;
   z-index: 1000;
   margin: 0;
-  background: #f0f0f0;
-  color: black;
+  background: #4800ff;
+  color: rgb(0, 229, 255);
   overflow: auto;
   width: 100%;
 }
@@ -411,7 +417,7 @@ onMounted(() => {
 }
 
 .dark-mode .main-div {
-  background: #202528;
+  background: #20252800;
   color: white;
 }
 
@@ -433,6 +439,7 @@ onMounted(() => {
   justify-content: start;
   align-items: center;
   height: 100vh;
+  /* homepage háttér képe */
   background: url('../public/running_light.jpg');
   background-size: cover;
   background-position: center;
@@ -440,6 +447,7 @@ onMounted(() => {
 }
 
 .dark-mode .data-container {
+    /* homepage háttér képe */
   background: url('../public/running.jpg');
   background-size: cover;
 }
@@ -497,15 +505,15 @@ h6 {
 .map {
   display: flex;
   flex-direction: column;
-  background-color: rgba(255, 255, 255, 0.6);
-  border-radius: 1rem;
+  background-color: rgba(255, 255, 255, 0);
+  border-radius: 2rem;
   padding: 1rem;
-  height: 35rem;
+  height: 20%;
   gap: 2rem;
 }
 
 .dark-mode .map {
-  background-color: #6262628c;
+  background-color: #300e0e00;
 }
 
 img {
@@ -526,7 +534,7 @@ img {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: rgba(255, 255, 255, 0.6);
+  background-color: rgba(255, 255, 255, 0);
   border-radius: 1rem;
   padding: 1rem;
   height: 17rem;
@@ -535,7 +543,7 @@ img {
 }
 
 .dark-mode .choose-run {
-  background-color: #6262628c;
+  background-color: #ffffff00;
 }
 
 .choosen-km {
@@ -554,27 +562,27 @@ img {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background-color: rgba(255, 255, 255, 0.6);
+  background-color: rgba(255, 255, 255, 0);
   border-radius: 1rem;
   padding: 0.5rem;
   height: 17rem;
 }
 
 .dark-mode .all {
-  background-color: #6262628c;
+  background-color: #62626200;
 }
 
 /* second floor */
 .second-floor {
   display: flex;
   flex-direction: column;
-  background-color: rgba(255, 255, 255, 0.6);
+  background-color: rgba(98, 50, 50, 0);
   border-radius: 1rem;
   height: 100%;
 }
 
 .dark-mode .second-floor {
-  background-color: #6262628c;
+  background-color: #62626200;
 }
 
 .data {
@@ -605,7 +613,7 @@ img {
 }
 
 .selected-day {
-  background-color: #f0f0f0;
+  background-color: #e20000;
   border-radius: 1rem;
 }
 
@@ -727,7 +735,7 @@ img {
 .add-data-button,
 .save-button {
   background: linear-gradient(to right, #0b0b2b, #1b2735 70%, #090a0f);
-  color: white;
+  color: rgb(0, 171, 250);
   border: none;
   border-radius: 1rem;
   padding: 0.5rem;

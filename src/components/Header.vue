@@ -55,7 +55,7 @@ watchEffect(() => {
 <template>
   <header :class="['header', { 'dark-mode': isDarkMode }]">
     <div class="video-text">
-      <b>RUNNING</b>
+      <b>FUSS</b>
     </div>
     <div class="theme-switcher">
       <i v-if="isSocial" class="bi bi-person-fill" @click="navigateToHome()"></i>
@@ -82,7 +82,7 @@ watchEffect(() => {
   justify-content: space-between;
   align-items: center;
   padding: 0 20px;
-  background-color: transparent;
+  background-color: rgba(255, 247, 0, 0.386);
   color: black;
   height: 100%;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
@@ -218,6 +218,7 @@ input:checked + .slider:before {
   cursor: pointer;
   user-select: none;
   -webkit-text-stroke: 1px black;
+  color: #40e0d0; /* Türkizkék szín */
 }
 
 .dark-mode .video-text {

@@ -3,6 +3,7 @@ import { ref, watch, nextTick, onMounted } from 'vue';
 import Header from '../components/Header.vue';
 import { useRouter } from 'vue-router';
 import { useStore } from 'vuex';
+import AdComponent from '../components/AdComponent.vue';
 
 const router = useRouter();
 const store = useStore();
@@ -26,6 +27,11 @@ const cards = ref([
     <header id="header">
       <Header :showLogOut="true" :navigateToLogin="navigateToLogin" :isSocial="true" :navigateToHome="navigateToHome"/>
     </header>
+    <div>
+      <AdComponent size="medium"  style="position: absolute; right: 0; top: 20%;"/>  
+      <AdComponent size="large"  style="position: absolute; left: 10%; bottom: 0%;"/>  
+      <AdComponent size="medium"  style="position: absolute; left: 0; top: 20%;"/>  
+    </div>
     <div class="cards-container">
       <div v-for="card in cards" :key="card.name" class="card">
         <div class="card-header">
