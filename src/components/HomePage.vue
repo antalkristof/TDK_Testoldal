@@ -172,11 +172,10 @@ onMounted(() => {
     <!-- <div class="wellcome-text">
       <b>{{ store.getters.translate('welcome') }} {{ userName }}!</b>
     </div> -->
-    <div>
+
       <AdComponent size="medium"  style="position: absolute; right: 0; top: 20%;"/>  
-      <AdComponent size="large"  style="position: absolute; left: 10%; bottom: -10%;"/>  
+      <AdComponent size="large"  style="position: absolute; left: 10%; bottom: 0%;"/>  
       <AdComponent size="medium"  style="position: absolute; left: 0; top: 20%;"/>  
-    </div>
     <div class="main-content">
       <div class="data-container">
         <div class="all-card">

@@ -56,9 +56,7 @@ const adClass = computed(() => {
 
 <style scoped>
 .ads-container {
-  position: fixed;
-  bottom: 10px;
-  right: 10px;
+  position: absolute;
   display: flex;
   flex-direction: column;
   gap: 10px;

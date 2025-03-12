@@ -72,8 +72,8 @@ const handleRegister = () => {
       <Header />
     </header>
     <div>
-      <!-- <AdComponent size="small"  style="position: absolute; right: 0%; top: 10%;"/>  
-      <AdComponent size="small"  style="position: absolute; left: 0%; top: 10%;"/>   -->
+      <AdComponent size="small"  style="position: absolute; right: 0%; top: 10%;"/>  
+      <AdComponent size="small"  style="position: absolute; left: 0%; top: 10%;"/>  
       <AdComponent size="medium"  style="position: absolute; right: 0; top: 20%;"/>  
       <AdComponent size="large"  style="position: absolute; left: 10%; bottom: 0%;"/>  
       <AdComponent size="medium"  style="position: absolute; left: 0; top: 20%;"/>  
@@ -85,6 +85,7 @@ const handleRegister = () => {
 
       <div v-if="showLogin" class="login-box">
         <form @submit.prevent="handleLogin">
+          <h1 style="color: white;">Bejelentkezés</h1>
           <div class="input-container">
             <input type="text" id="login-username" placeholder="Felhasználónév">
           </div>
@@ -93,14 +94,13 @@ const handleRegister = () => {
           </div>
           <div class="button-container">
             <button type="submit" class="login-button">Belépés</button>
+            <button @click="toggleForm" class="toggle-button">Regisztráció</button>
           </div>
         </form>
-        <div class="button-container">
-          <button @click="toggleForm" class="toggle-button">Regisztráció</button>
-        </div>
       </div>
       <div v-else>
         <form @submit.prevent="handleRegister" class="login-box">
+          <h1 style="color: white;">Regisztráció</h1>
           <div class="input-container">
             <input type="text" id="register-username" placeholder="Felhasználónév">
           </div>
@@ -177,7 +177,7 @@ body {
 .button-container {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 1rem;
 }
 
 .login-button, .toggle-button {
