@@ -358,7 +358,7 @@ onMounted(() => {
           <div class="input-container">
             <label>{{ store.getters.translate('distance') }}</label>
             <input v-model="newData.distance">
-          </div>
+          </div> 
           <div class="input-container">
             <label>{{ store.getters.translate('time') }}</label>
             <input v-model="newData.time">
