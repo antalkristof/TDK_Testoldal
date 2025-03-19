@@ -145,6 +145,9 @@ i {
   gap: 1rem;
   transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
 }
+i  {
+  color: white;
+}
 
 .video-text {
   position: relative;
