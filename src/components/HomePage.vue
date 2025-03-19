@@ -1,5 +1,5 @@
 <script setup>
-import { ref, watch, nextTick, onMounted } from 'vue';
+import { ref, watch, nextTick, onMounted, onUnmounted } from 'vue';
 import Header from '../components/Header.vue';
 import { useRouter } from 'vue-router';
 import { useStore } from 'vuex';
@@ -34,6 +34,8 @@ const days = ref([
   { name: 'Szombat', date: 'Jan. 27.' },
   { name: 'Vasárnap', date: 'Jan. 28.' }
 ]);
+
+let refreshInterval = null;
 
 function showDetail() {
   showDetails.value = true;
@@ -95,58 +97,14 @@ function updateData() {
   }
 }
 
-const navigateToLogin = () => {
-  router.push('/');
-};
-const navigateToSocial = () => {
-  router.push('/socialmedia');
-};
-
-function animateNumber(el, start, end, duration, unit) {
-  let startTime = null;
-
-  function animation(currentTime) {
-    if (startTime === null) startTime = currentTime;
-    const progress = currentTime - startTime;
-    const value = Math.min(start + (end - start) * (progress / duration), end);
-    el.innerText = (Number.isInteger(end) ? Math.round(value) : value.toFixed(2)) + ' ' + unit;
-
-    if (progress < duration) {
-      requestAnimationFrame(animation);
-    }
-  }
-
-  requestAnimationFrame(animation);
-}
-
-watch(showDetails, async (newVal) => {
-  if (newVal) {
-    await nextTick();
-    const numbers = document.querySelectorAll('.text');
-    numbers.forEach((number) => {
-      const endValue = parseFloat(number.getAttribute('data-end'));
-      const unit = number.getAttribute('data-unit');
-      animateNumber(number, 0, endValue, 2000, unit);
-    });
-
-    const choosenKM = document.querySelectorAll('.choosen-km2');
-    choosenKM.forEach((number) => {
-      const endValue = parseFloat(number.getAttribute('data-end'));
-      const unit = number.getAttribute('data-unit');
-      animateNumber(number, 0, endValue, 2000, unit);
-    });
-  }
-});
-
-onMounted(() => {
-  users.value = JSON.parse(localStorage.getItem('users')) || [];
+function fetchUserData() {
   const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
   if (loggedInUser) {
     userName.value = loggedInUser.username;
     const userData = JSON.parse(localStorage.getItem(loggedInUser.username)) || [];
-    userData.forEach(run => {
-      const day = days.value.find(d => d.date === run.date);
-      if (day) {
+    days.value.forEach(day => {
+      const run = userData.find(run => run.date === day.date);
+      if (run) {
         day.distance = run.distance;
         day.time = run.time;
         day.avgSpeed = run.avgSpeed;
@@ -156,10 +114,43 @@ onMounted(() => {
         day.burnedCalories = run.burnedCalories;
         day.steps = run.steps;
         day.avgSteps = run.avgSteps;
+      } else {
+        // Reset the day if no data is found
+        day.distance = null;
+        day.time = null;
+        day.avgSpeed = null;
+        day.avgPace = null;
+        day.avgHeartRate = null;
+        day.avgRhythm = null;
+        day.burnedCalories = null;
+        day.steps = null;
+        day.avgSteps = null;
       }
     });
   }
+}
+
+const navigateToLogin = () => {
+  router.push('/');
+};
+const navigateToSocial = () => {
+  router.push('/socialmedia');
+};
+
+onMounted(() => {
+  users.value = JSON.parse(localStorage.getItem('users')) || [];
+  fetchUserData();
   selectedDay.value = days.value[0];
+
+  // Indítsd el az 1 másodperces frissítést
+  refreshInterval = setInterval(fetchUserData, 1000);
+});
+
+onUnmounted(() => {
+  // Állítsd le az időzítőt, ha a komponens eltávolításra kerül
+  if (refreshInterval) {
+    clearInterval(refreshInterval);
+  }
 });
 </script>
 
