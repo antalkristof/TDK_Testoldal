@@ -1,5 +1,6 @@
 <script setup>
-import { ref, watchEffect, defineProps, onMounted } from 'vue';
+import { ref, onMounted } from 'vue';
+import { useRouter } from 'vue-router';
 import { useStore } from 'vuex';
 
 defineProps({
@@ -21,6 +22,8 @@ defineProps({
 });
 
 const store = useStore();
+const router = useRouter();
+
 const isDarkMode = ref(false);
 const showSettings = ref(false);
 
@@ -46,10 +49,27 @@ const switchLanguage = () => {
   store.commit('switchLanguage');
 };
 
-watchEffect(() => {
-  document.body.style.backgroundColor = isDarkMode.value ? '#333' : '#fff';
-  document.body.style.color = isDarkMode.value ? '#fff' : '#000';
-});
+// Kijelentkezés logika
+const navigateToLogin = () => {
+  const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
+  if (loggedInUser) {
+    const sessionEndTime = new Date();
+    const elapsedTime = Math.floor((sessionEndTime - new Date(store.state.sessionStartTime)) / 1000); // Másodpercben
+
+    // Felhasználóhoz mentés
+    const storedUsers = JSON.parse(localStorage.getItem('users')) || [];
+    const userIndex = storedUsers.findIndex(user => user.username === loggedInUser.username);
+    if (userIndex !== -1) {
+      storedUsers[userIndex].totalTime = (storedUsers[userIndex].totalTime || 0) + elapsedTime;
+      localStorage.setItem('users', JSON.stringify(storedUsers));
+    }
+
+    // Kijelentkezés
+    localStorage.removeItem('loggedInUser');
+    store.commit('resetSessionStartTime'); // Stopper nullázása
+    router.push('/'); // Navigálás a bejelentkezési oldalra
+  }
+};
 </script>
 
 <template>
