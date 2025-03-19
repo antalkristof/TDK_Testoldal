@@ -1,9 +1,8 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import Header from '../components/Header.vue';
 import { useRouter } from 'vue-router';
 import { useStore } from 'vuex';
-
 
 const router = useRouter();
 const store = useStore();
@@ -54,9 +53,9 @@ const handleRegister = () => {
   const user = {
     username,
     email,
-    password
+    password,
+    totalTime: 0 // Kezdeti idő
   };
-  
 
   storedUsers.push(user);
   localStorage.setItem('users', JSON.stringify(storedUsers));
@@ -64,6 +63,14 @@ const handleRegister = () => {
   toggleForm();
 };
 
+// Stopper indítása az első kattintáskor
+onMounted(() => {
+  document.addEventListener('click', () => {
+    if (!store.state.sessionStartTime) {
+      store.commit('setSessionStartTime', new Date());
+    }
+  });
+});
 </script>
 
 <template>
