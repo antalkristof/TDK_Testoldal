@@ -31,6 +31,8 @@ export const store = createStore({
         edit: 'Edit',
         add: 'Add',
         save: 'Save',
+        edit_data: 'Edit data',
+        add_data: 'Add data',
       },
       hu: {
         //login
@@ -59,6 +61,8 @@ export const store = createStore({
         edit: 'Szerkesztés',
         add:'Hozzáadás',
         save: 'Mentés',
+        edit_data: 'Adatok szerkesztése',
+        add_data: 'Adatok hozzáadása',
       }
     }
   },

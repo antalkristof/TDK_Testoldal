@@ -69,7 +69,7 @@ const handleRegister = () => {
 <template>
   <body>
     <header class="sticky-header">
-      <Header />
+      <Header :isSetting="false" />
     </header>
     <div class="container">
       <!-- <h1 class="title">FUSS AZ EGÉSZSÉGÉRT!</h1> -->

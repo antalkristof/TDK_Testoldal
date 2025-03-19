@@ -15,6 +15,10 @@ defineProps({
     type: Boolean,
     default: false
   },
+  isSetting: {
+    type: Boolean,
+    default: true
+  },
   navigateToLogin: Function,
   navigateToHome: Function,
   navigateToSocial: Function,
@@ -40,17 +44,17 @@ const switchLanguage = () => {
     <div class="theme-switcher">
       <i v-if="isSocial" class="bi bi-person-fill" @click="navigateToHome()"></i>
       <i v-if="isProfile" class="bi bi-globe-americas" @click="navigateToSocial()"></i>
-      <!-- <i @click="toggleSettings" class="bi bi-gear"></i> -->
-      <!-- <transition name="slide">
+      <i v-if="isSetting" @click="toggleSettings" class="bi bi-gear"></i>
+      <transition name="slide">
         <div v-if="showSettings" class="settings-panel">
-          <div class="language-switcher">
+          <!-- <div class="language-switcher">
             <button @click="switchLanguage">
               {{ store.state.currentLanguage === 'en' ? 'English' : 'Magyar' }}
             </button>
-          </div>
+          </div> -->
           <i v-if="showLogOut" @click="navigateToLogin()" class="bi bi-box-arrow-right"></i>
         </div>
-      </transition> -->
+      </transition>
     </div>
   </header>
 </template>
