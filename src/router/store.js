@@ -64,16 +64,24 @@ export const store = createStore({
         edit_data: 'Adatok szerkesztése',
         add_data: 'Adatok hozzáadása',
       }
-    }
+    },
+    sessionStartTime: null, // Stopper kezdőidő
   },
   mutations: {
     switchLanguage(state) {
       state.currentLanguage = state.currentLanguage === 'en' ? 'hu' : 'en';
-    }
+    },
+    setSessionStartTime(state, time) {
+      state.sessionStartTime = time;
+    },
+    resetSessionStartTime(state) {
+      state.sessionStartTime = null;
+    },
   },
   getters: {
     translate: (state) => (key) => {
       return state.translations[state.currentLanguage][key];
-    }
+    },
+    sessionStartTime: (state) => state.sessionStartTime,
   }
 });
